@@ -1,5 +1,4 @@
-window.LoginContainer = function LoginContainer() {
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+window.LoginContainer = function LoginContainer({ isLoggedIn, onAuthenticated }) {
     const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
@@ -12,27 +11,27 @@ window.LoginContainer = function LoginContainer() {
                     });
                     if (res.ok) {
                         window.adminKey = adminKey;
-                        setIsLoggedIn(true);
+                        if (typeof onAuthenticated === 'function') {
+                            onAuthenticated({ showToast: false });
+                        }
                         setIsLoading(false);
-                        // 触发主面板显示
-                        setTimeout(() => window.showMainPanel && window.showMainPanel(), 0);
                         return;
-                    } else {
-                        localStorage.removeItem('kiro_admin_key');
                     }
+                    localStorage.removeItem('kiro_admin_key');
                 } catch (e) {
                     console.error('Auth check failed:', e);
                 }
             }
             setIsLoading(false);
         };
+
         checkAuth();
-    }, []);
+    }, [onAuthenticated]);
 
     const handleLoginSuccess = () => {
-        setIsLoggedIn(true);
-        window.showMainPanel && window.showMainPanel();
-        window.showToast && window.showToast('登录成功', 'success');
+        if (typeof onAuthenticated === 'function') {
+            onAuthenticated({ showToast: true });
+        }
     };
 
     if (isLoading) {
@@ -49,7 +48,7 @@ window.LoginContainer = function LoginContainer() {
 
     return (
         <div id="loginPage" className="min-h-screen flex items-center justify-center animate-fadeIn">
-            <LoginPage onLoginSuccess={handleLoginSuccess} />
+            <window.LoginPage onLoginSuccess={handleLoginSuccess} />
         </div>
     );
 };

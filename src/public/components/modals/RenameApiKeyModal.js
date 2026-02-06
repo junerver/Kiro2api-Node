@@ -13,7 +13,7 @@ window.RenameApiKeyModal = function RenameApiKeyModal() {
                 </div>
                 <div className="flex justify-end gap-3 p-6 border-t border-gray-100">
                     <button onClick={() => hideModal('renameApiKeyModal')} className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition">取消</button>
-                    <button onClick={() => confirmRenameApiKey()} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition">确认</button>
+                    <button onClick={() => window.confirmRenameApiKey && window.confirmRenameApiKey()} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition">确认</button>
                 </div>
             </div>
         </div>

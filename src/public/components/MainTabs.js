@@ -1,4 +1,4 @@
-window.MainTabs = function(props) {
+window.MainTabs = function MainTabs(props) {
     const tabs = [
         { id: 'accounts', label: '账号管理' },
         { id: 'logs', label: '请求记录' },
@@ -9,7 +9,7 @@ window.MainTabs = function(props) {
     return (
         <div className="border-b border-gray-100">
             <nav className="flex space-x-8 px-6">
-                {tabs.map(tab => (
+                {tabs.map((tab) => (
                     <button
                         key={tab.id}
                         onClick={() => props.onTabChange(tab.id)}

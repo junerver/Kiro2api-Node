@@ -31,7 +31,7 @@ window.AddMappingModal = function AddMappingModal() {
                 </div>
                 <div className="flex justify-end gap-3 p-6 border-t border-gray-100">
                     <button onClick={() => hideModal('addMappingModal')} className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition">取消</button>
-                    <button onClick={() => confirmAddMapping()} className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium transition">添加</button>
+                    <button onClick={() => window.confirmAddMapping && window.confirmAddMapping()} className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium transition">添加</button>
                 </div>
             </div>
         </div>

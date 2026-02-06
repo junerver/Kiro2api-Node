@@ -1,4 +1,4 @@
-window.AccountsToolbar = function(props) {
+window.AccountsToolbar = function AccountsToolbar(props) {
     return (
         <div className="flex flex-wrap items-center gap-3 mb-6">
             <button onClick={props.onAdd} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition flex items-center">
@@ -30,7 +30,7 @@ window.AccountsToolbar = function(props) {
             <select
                 id="strategy"
                 value={props.strategy}
-                onChange={(e) => props.onStrategyChange(e.target.value)}
+                onChange={(event) => props.onStrategyChange(event.target.value)}
                 className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
                 <option value="round-robin">轮询策略</option>

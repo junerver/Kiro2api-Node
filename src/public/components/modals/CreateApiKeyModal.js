@@ -14,13 +14,13 @@ window.CreateApiKeyModal = function CreateApiKeyModal() {
                         <p className="text-sm text-gray-600 mb-2">密钥已生成，请妥善保存：</p>
                         <div className="flex gap-2">
                             <input type="text" id="generated-key-value" readOnly className="flex-1 px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono text-sm" />
-                            <button onClick={() => copyGeneratedKey()} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition">复制</button>
+                            <button onClick={() => window.copyGeneratedKey && window.copyGeneratedKey()} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition">复制</button>
                         </div>
                     </div>
                 </div>
                 <div className="flex justify-end gap-3 p-6 border-t border-gray-100">
                     <button id="cancel-key-btn" onClick={() => hideModal('createApiKeyModal')} className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition">取消</button>
-                    <button id="create-key-btn" onClick={() => createApiKey()} className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium transition">创建</button>
+                    <button id="create-key-btn" onClick={() => window.createApiKey && window.createApiKey()} className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium transition">创建</button>
                     <button id="confirm-key-btn" onClick={() => hideModal('createApiKeyModal')} className="hidden px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition">确认</button>
                 </div>
             </div>

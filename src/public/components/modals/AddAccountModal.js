@@ -1,4 +1,42 @@
 window.AddAccountModal = function AddAccountModal() {
+    const toggleIdcFields = React.useCallback(() => {
+        const authEl = document.getElementById('acc-auth');
+        const idcFields = document.getElementById('idc-fields');
+        if (!authEl || !idcFields) {
+            return;
+        }
+        idcFields.classList.toggle('hidden', authEl.value !== 'idc');
+    }, []);
+
+    const addAccount = React.useCallback(async () => {
+        const data = {
+            name: document.getElementById('acc-name')?.value || '未命名账号',
+            auth_method: document.getElementById('acc-auth')?.value,
+            refresh_token: document.getElementById('acc-refresh')?.value,
+            client_id: document.getElementById('acc-client-id')?.value || null,
+            client_secret: document.getElementById('acc-client-secret')?.value || null
+        };
+
+        if (!data.refresh_token) {
+            window.showToast('请填写 Refresh Token', 'warning');
+            return;
+        }
+
+        try {
+            await fetchApi('/api/accounts', {
+                method: 'POST',
+                body: JSON.stringify(data)
+            });
+            hideModal('addModal');
+            window.showToast('添加成功', 'success');
+            if (typeof window.__refreshAccountsTab === 'function') {
+                window.__refreshAccountsTab();
+            }
+        } catch (e) {
+            window.showToast('添加失败: ' + e.message, 'error');
+        }
+    }, []);
+
     return (
         <div id="addModal" className="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 animate-scaleIn">
@@ -10,7 +48,7 @@ window.AddAccountModal = function AddAccountModal() {
                 </div>
                 <div className="p-6 space-y-4">
                     <input type="text" id="acc-name" placeholder="账号名称" className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    <select id="acc-auth" onChange={() => toggleIdcFields()} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <select id="acc-auth" onChange={toggleIdcFields} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="social">Social</option>
                         <option value="idc">IdC / BuilderId</option>
                     </select>
@@ -22,7 +60,7 @@ window.AddAccountModal = function AddAccountModal() {
                 </div>
                 <div className="flex justify-end gap-3 p-6 border-t border-gray-100">
                     <button onClick={() => hideModal('addModal')} className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition">取消</button>
-                    <button onClick={() => addAccount()} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition">添加</button>
+                    <button onClick={addAccount} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition">添加</button>
                 </div>
             </div>
         </div>

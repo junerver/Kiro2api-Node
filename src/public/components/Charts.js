@@ -398,3 +398,9 @@ function ApiKeyStatsChart({ timeRange }) {
 
     return <canvas ref={chartRef} />;
 }
+
+window.ModelChart = ModelChart;
+window.SuccessRateChart = SuccessRateChart;
+window.TokenTrendsChart = TokenTrendsChart;
+window.TopAccountsChart = TopAccountsChart;
+window.ApiKeyStatsChart = ApiKeyStatsChart;

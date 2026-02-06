@@ -1,5 +1,4 @@
-// React 登录组件
-function LoginPage({ onLoginSuccess }) {
+window.LoginPage = function LoginPage({ onLoginSuccess }) {
     const [password, setPassword] = React.useState('');
     const [error, setError] = React.useState(false);
 
@@ -8,12 +7,13 @@ function LoginPage({ onLoginSuccess }) {
             setError(true);
             return;
         }
+
         try {
             const res = await fetch('/api/status', {
                 headers: { 'Authorization': 'Bearer ' + password }
             });
             if (res.ok) {
-                adminKey = password;
+                window.adminKey = password;
                 localStorage.setItem('kiro_admin_key', password);
                 onLoginSuccess();
             } else {
@@ -24,8 +24,10 @@ function LoginPage({ onLoginSuccess }) {
         }
     };
 
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter') handleLogin();
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            handleLogin();
+        }
     };
 
     return (
@@ -46,7 +48,10 @@ function LoginPage({ onLoginSuccess }) {
                 type="password"
                 placeholder="管理密钥"
                 value={password}
-                onChange={(e) => { setPassword(e.target.value); setError(false); }}
+                onChange={(event) => {
+                    setPassword(event.target.value);
+                    setError(false);
+                }}
                 onKeyPress={handleKeyPress}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition mb-4"
             />
@@ -58,4 +63,4 @@ function LoginPage({ onLoginSuccess }) {
             </button>
         </div>
     );
-}
+};
